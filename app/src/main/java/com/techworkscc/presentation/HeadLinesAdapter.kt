@@ -3,29 +3,27 @@ package com.techworkscc.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.techworkscc.R
 import com.techworkscc.domain.NewsVO
 
 class HeadLinesAdapter( private var data: List<NewsVO> = emptyList()): RecyclerView.Adapter<HeadLinesAdapter.ViewHolder>() {
-
-
-    fun updateData(newdata: List<NewsVO>){
-        this.data = newdata.toMutableList()
-        notifyDataSetChanged()
-    }
 
     /**
          * Provide a reference to the type of views that you are using
          * (custom ViewHolder)
          */
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val textView: TextView
+            val tvTitle: TextView
+            val ivCover: ImageView
 
             init {
                 // Define click listener for the ViewHolder's View
-                textView = view.findViewById(R.id.tvName)
+                tvTitle = view.findViewById(R.id.tvTitle)
+                ivCover = view.findViewById(R.id.ivNews)
             }
         }
 
@@ -43,7 +41,11 @@ class HeadLinesAdapter( private var data: List<NewsVO> = emptyList()): RecyclerV
 
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
-            viewHolder.textView.text = data[position].title
+            viewHolder.tvTitle.text = data[position].title
+
+            Glide.with(viewHolder.ivCover.context)
+                .load(data[position].imageCover).into(viewHolder.ivCover)
+
         }
 
         // Return the size of your dataset (invoked by the layout manager)

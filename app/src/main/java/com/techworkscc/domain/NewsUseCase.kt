@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class NewsUseCase(private val repository: NewsRepository) {
+    val datePatternNews = "yyyy-MM-dd'T'HH:mm:ss"
     suspend fun loadNews(): ListNewsVO {
         return toVO(repository.loadNews())
     }
@@ -15,8 +16,7 @@ class NewsUseCase(private val repository: NewsRepository) {
             throw BusinessException()
         } else {
             val voList: MutableList<NewsVO> = mutableListOf()
-            val pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-//            2023-06-04T19:22:19.5734456Z
+            val pattern = DateTimeFormatter.ofPattern(datePatternNews)
             response.articles.map {
                 voList.add(
                     NewsVO(
@@ -26,7 +26,7 @@ class NewsUseCase(private val repository: NewsRepository) {
                     )
                 )
             }
-            return ListNewsVO(voList)
+            return ListNewsVO(voList.sortedBy { it.publicationDate })
         }
     }
 }

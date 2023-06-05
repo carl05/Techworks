@@ -1,7 +1,6 @@
 package com.techworkscc
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +15,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
-        val recyclerView: RecyclerView = findViewById(R.id.rv_news)
+    }
 
+    override fun onStart() {
+        super.onStart()
+        val recyclerView: RecyclerView = findViewById(R.id.rv_news)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         newsViewModel.newsLivewData.observe(this) {
             val newsAdapter = HeadLinesAdapter(it.listNewsVO)
-            recyclerView.layoutManager = LinearLayoutManager(this)
             recyclerView.adapter = newsAdapter
         }
         newsViewModel.loadNews()

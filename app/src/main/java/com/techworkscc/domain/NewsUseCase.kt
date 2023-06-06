@@ -20,13 +20,15 @@ class NewsUseCase(private val repository: NewsRepository) {
             response.articles.map {
                 voList.add(
                     NewsVO(
-                        imageCover = it.urlToImage,
-                        publicationDate = LocalDateTime.parse(it.publishedAt.split(".")[0], pattern),
-                        title = it.title
+                        urlToImage = it.urlToImage,
+                        publishedAt = LocalDateTime.parse(it.publishedAt.split(".")[0], pattern),
+                        title = it.title,
+                        content = it.content,
+                        description = it.description
                     )
                 )
             }
-            return ListNewsVO(voList.sortedBy { it.publicationDate })
+            return ListNewsVO(voList.sortedBy { it.publishedAt })
         }
     }
 }

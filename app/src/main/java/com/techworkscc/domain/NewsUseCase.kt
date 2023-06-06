@@ -21,7 +21,7 @@ class NewsUseCase(private val repository: NewsRepository) {
                 voList.add(
                     NewsVO(
                         urlToImage = it.urlToImage,
-                        publishedAt = LocalDateTime.parse(it.publishedAt.split(".")[0], pattern),
+                        publishedAt = LocalDateTime.parse(it.publishedAt.substring(0,19), pattern),
                         title = it.title,
                         content = it.content,
                         description = it.description,

@@ -20,6 +20,12 @@ android {
             useSupportLibrary true
         }
     }
+    flavorDimensions "default"
+    productFlavors {
+        bbc {}
+        abc {}
+        nfl {}
+    }
 
     buildTypes {
         release {

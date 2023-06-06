@@ -26,6 +26,7 @@ class NewsListActivity : AppCompatActivity() {
         if(recyclerView?.adapter?.itemCount == null){
             fillData()
         }
+
     }
 
     private fun fillData() {

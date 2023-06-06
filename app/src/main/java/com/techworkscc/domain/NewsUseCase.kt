@@ -24,11 +24,13 @@ class NewsUseCase(private val repository: NewsRepository) {
                         publishedAt = LocalDateTime.parse(it.publishedAt.split(".")[0], pattern),
                         title = it.title,
                         content = it.content,
-                        description = it.description
+                        description = it.description,
+                        sourceName = it.source.name
                     )
                 )
             }
-            return ListNewsVO(voList.sortedBy { it.publishedAt })
+            return ListNewsVO(
+                voList.sortedBy { it.publishedAt })
         }
     }
 }

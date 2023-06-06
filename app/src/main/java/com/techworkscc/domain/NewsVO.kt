@@ -10,6 +10,7 @@ data class ListNewsVO (
 ): Parcelable
 @Parcelize
 data class NewsVO(
+    val sourceName: String,
     val title: String,
     val publishedAt: LocalDateTime,
     val urlToImage: String,

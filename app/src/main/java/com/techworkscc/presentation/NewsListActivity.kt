@@ -18,6 +18,7 @@ class NewsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.news_list)
+        title = ""
     }
 
     override fun onStart() {
@@ -25,6 +26,7 @@ class NewsListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.rv_news)
         recyclerView.layoutManager = LinearLayoutManager(this)
         newsViewModel.newsLivewData.observe(this) {
+            title = it.listNewsVO.firstOrNull()?.sourceName
             val newsAdapter = NewsAdapter(it.listNewsVO){
                 goToDetailsActivity(it)
             }

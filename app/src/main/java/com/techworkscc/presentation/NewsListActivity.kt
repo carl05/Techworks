@@ -13,8 +13,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListActivity : AppCompatActivity() {
 
-    val newsViewModel: NewsViewModel by viewModel()
-
+    private val newsViewModel: NewsViewModel by viewModel()
+    private var recyclerView: RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.news_list)
@@ -23,14 +23,20 @@ class NewsListActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val recyclerView: RecyclerView = findViewById(R.id.rv_news)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        newsViewModel.newsLivewData.observe(this) {
-            title = it.listNewsVO.firstOrNull()?.sourceName
-            val newsAdapter = NewsAdapter(it.listNewsVO){
-                goToDetailsActivity(it)
+        if(recyclerView?.adapter?.itemCount == null){
+            fillData()
+        }
+    }
+
+    private fun fillData() {
+        recyclerView = findViewById(R.id.rv_news)
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+        newsViewModel.newsLivewData.observe(this) { listNewsVO ->
+            title = listNewsVO.listNewsVO.firstOrNull()?.sourceName
+            val newsAdapter = NewsAdapter(listNewsVO.listNewsVO) { newsVO ->
+                goToDetailsActivity(newsVO)
             }
-            recyclerView.adapter = newsAdapter
+            recyclerView?.adapter = newsAdapter
         }
         newsViewModel.loadNews()
     }

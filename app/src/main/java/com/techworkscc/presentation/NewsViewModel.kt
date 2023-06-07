@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NewsViewModel(private val newsUseCase: NewsUseCase) : ViewModel() {
-   val newsLivewData: MutableLiveData<ListNewsVO> = MutableLiveData()
 
+   val newsLivewData: MutableLiveData<ListNewsVO> = MutableLiveData()
    fun loadNews(){
       viewModelScope.launch(Dispatchers.Main) {
          val response = newsUseCase.loadNews()
